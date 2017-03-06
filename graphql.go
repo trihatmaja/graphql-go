@@ -8,11 +8,11 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 
-	"github.com/neelance/graphql-go/errors"
-	"github.com/neelance/graphql-go/internal/exec"
-	"github.com/neelance/graphql-go/internal/query"
-	"github.com/neelance/graphql-go/internal/schema"
-	"github.com/neelance/graphql-go/introspection"
+	"github.com/trihatmaja/graphql-go/errors"
+	"github.com/trihatmaja/graphql-go/internal/exec"
+	"github.com/trihatmaja/graphql-go/internal/query"
+	"github.com/trihatmaja/graphql-go/internal/schema"
+	"github.com/trihatmaja/graphql-go/introspection"
 )
 
 const OpenTracingTagQuery = "graphql.query"

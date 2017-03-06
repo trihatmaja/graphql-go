@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/neelance/graphql-go"
-	"github.com/neelance/graphql-go/example/starwars"
+	"github.com/trihatmaja/graphql-go"
+	"github.com/trihatmaja/graphql-go/example/starwars"
 )
 
 type helloWorldResolver1 struct{}
@@ -32,6 +32,16 @@ func (r *theNumberResolver) TheNumber() int32 {
 func (r *theNumberResolver) ChangeTheNumber(args *struct{ NewNumber int32 }) *theNumberResolver {
 	r.number = args.NewNumber
 	return r
+}
+
+type jsonResolver struct{}
+
+func (r *jsonResolver) TestJson() graphql.Json {
+	var t = make(map[string]interface{})
+	t["hello"] = "world"
+	t["first"] = 1
+	t["false"] = true
+	return t
 }
 
 type timeResolver struct{}
@@ -1229,6 +1239,26 @@ func TestMutationOrder(t *testing.T) {
 					}
 				}
 			`,
+		},
+	})
+}
+
+func TestJson(t *testing.T) {
+	graphql.RunTests(t, []*graphql.Test{
+		{
+			Schema: graphql.MustParseSchema(`
+				schema {
+					query: Query
+				}
+
+				type Query {
+					testjson: Json!
+				}
+
+				scalar Json
+			`, &jsonResolver{}),
+			Query:          `query {testjson}`,
+			ExpectedResult: `{"testjson": {"hello":"world", "first": 1, "false": true}}`,
 		},
 	})
 }

@@ -3,7 +3,7 @@ package common
 import (
 	"fmt"
 
-	"github.com/neelance/graphql-go/internal/lexer"
+	"github.com/trihatmaja/graphql-go/internal/lexer"
 )
 
 type Type interface {

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"text/scanner"
 
-	"github.com/neelance/graphql-go/errors"
+	"github.com/trihatmaja/graphql-go/errors"
 )
 
 type syntaxError string
