@@ -67,3 +67,41 @@ func (f *trivialFieldsFilter) RecordSpan(span basictracer.RawSpan) {
 	f.rec.RecordSpan(span)
 }
 ```
+
+### JSON type struct
+
+With json type struct, you will not need to defined all the fields if you need all the fields with single query.
+
+Example for json type struct:
+
+```go
+
+type jsonResolver struct{}
+
+func (r *jsonResolver) TestJson() graphql.Json {
+	var t = make(map[string]interface{})
+	t["hello"] = "world"
+	t["first"] = 1
+	t["false"] = true
+	return t
+}
+```
+
+```
+schema {
+	query: Query
+}
+
+type Query {
+	testjson: Json!
+}
+
+scalar Json
+```
+
+```
+query {testjson}
+```
+
+
+
