@@ -44,6 +44,12 @@ func (r *jsonResolver) TestJson() graphql.Json {
 	return t
 }
 
+func (r *jsonResolver) TestJson2() graphql.Json {
+	var t = make(map[string]interface{})
+	t["hello"] = "gorgeous"
+	return t
+}
+
 type timeResolver struct{}
 
 func (r *timeResolver) AddHour(args *struct{ Time graphql.Time }) graphql.Time {
@@ -1259,6 +1265,27 @@ func TestJson(t *testing.T) {
 			`, &jsonResolver{}),
 			Query:          `query {testjson}`,
 			ExpectedResult: `{"testjson": {"hello":"world", "first": 1, "false": true}}`,
+		},
+	})
+}
+
+func TestJson2(t *testing.T) {
+	graphql.RunTests(t, []*graphql.Test{
+		{
+			Schema: graphql.MustParseSchema(`
+				schema {
+					query: Query
+				}
+
+				type Query {
+					testjson: Json!
+					testjson2: Json!
+				}
+
+				scalar Json
+			`, &jsonResolver{}),
+			Query:          `query {testjson, testjson2}`,
+			ExpectedResult: `{"testjson": {"hello":"world", "first": 1, "false": true}, "testjson2": {"hello": "gorgeous"}}`,
 		},
 	})
 }
